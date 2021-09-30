@@ -15,7 +15,7 @@ app.get('/', (req, res, next) => {
   })
 })
 
-app.use(require('./middlewares/path'))
+app.use(require('./middlewares/pathNotFound'))
 
 app.use(require('./middlewares/error'))
 
