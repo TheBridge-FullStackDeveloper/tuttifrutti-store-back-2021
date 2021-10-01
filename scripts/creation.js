@@ -16,7 +16,7 @@ const create = async () => {
       id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
       name TEXT NOT NULL,
       category product_categories NOT NULL,
-      reference TEXT UNIQUE NOT NULL,
+      reference SERIAL NOT NULL,
       stock BOOLEAN NOT NULL DEFAULT true,
       price DECIMAL NOT NULL, 
       product_pic TEXT,
@@ -65,8 +65,6 @@ const create = async () => {
       product_id uuid references products(id),
       order_id uuid references orders(id)
     );
-    
-    
     `);
     console.info("> creation done! 🚀");
   } catch (error) {
