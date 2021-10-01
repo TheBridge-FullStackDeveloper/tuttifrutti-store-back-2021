@@ -20,12 +20,12 @@ CREATE TABLE IF NOT EXISTS products (
   name TEXT NOT NULL,
   category product_categories NOT NULL,
   reference TEXT UNIQUE NOT NULL,
-  stock BOOLEAN NOT NULL,
+  stock BOOLEAN NOT NULL DEFAULT true,
   price DECIMAL NOT NULL, 
-  product_pic TEXT NOT NULL,
+  product_pic TEXT,
   keywords TEXT[],
   offer INTEGER,
-  featured BOOLEAN NOT NULL
+  featured BOOLEAN NOT NULL DEFAULT false
   );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -35,12 +35,12 @@ CREATE TABLE IF NOT EXISTS users (
   email TEXT UNIQUE NOT NULL,
   username TEXT UNIQUE NOT NULL,
   hash TEXT NOT NULL,
-  access_token TEXT DEFAULT NULL,  
-  activation_token TEXT DEFAULT NULL,
+  access_token TEXT,  
+  activation_token TEXT,
   active BOOLEAN NOT NULL DEFAULT false,
   address TEXT NOT NULL, 
   postal_code TEXT NOT NULL,
-  profile_pic TEXT DEFAULT NULL,
+  profile_pic TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
   updated_at TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC')
 );
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS orders (
   state order_states NOT NULL, 
   order_date TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
   delivery_date TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
-  cart BOOLEAN DEFAULT false
+  cart BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE IF NOT EXISTS cards (
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS cards (
   card_number TEXT NOT NULL,
   expiration_date TEXT NOT NULL,
   owner_name TEXT NOT NULL, 
-  card BOOLEAN DEFAULT false
+  card BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE IF NOT EXISTS products_orders (
