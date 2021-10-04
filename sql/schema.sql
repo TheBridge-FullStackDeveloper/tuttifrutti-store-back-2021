@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS products CASCADE;
-DROP TABLE IF EXISTS users CASCADE; 
-DROP TABLE IF EXISTS orders CASCADE; 
-DROP TABLE IF EXISTS cards; 
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS cards;
 DROP TABLE IF EXISTS products_orders;
 DROP TYPE IF EXISTS product_categories;
 DROP TYPE IF EXISTS order_states;
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS products (
   category product_categories NOT NULL,
   reference SERIAL NOT NULL,
   stock BOOLEAN NOT NULL DEFAULT true,
-  price DECIMAL NOT NULL, 
+  price DECIMAL NOT NULL,
   product_pic TEXT,
   keywords TEXT[],
   offer INTEGER,
@@ -35,10 +35,10 @@ CREATE TABLE IF NOT EXISTS users (
   email TEXT UNIQUE NOT NULL,
   username TEXT UNIQUE NOT NULL,
   hash TEXT NOT NULL,
-  access_token TEXT,  
+  access_token TEXT,
   activation_token TEXT,
   active BOOLEAN NOT NULL DEFAULT false,
-  address TEXT NOT NULL, 
+  address TEXT NOT NULL,
   postal_code TEXT NOT NULL,
   profile_pic TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS orders (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id uuid references users(id),
-  state order_states NOT NULL, 
+  state order_states NOT NULL,
   order_date TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
   delivery_date TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
   cart BOOLEAN NOT NULL DEFAULT false
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS cards (
   provider card_providers NOT NULL,
   card_number TEXT NOT NULL,
   expiration_date TEXT NOT NULL,
-  owner_name TEXT NOT NULL, 
+  owner_name TEXT NOT NULL,
   card BOOLEAN NOT NULL DEFAULT false
 );
 
