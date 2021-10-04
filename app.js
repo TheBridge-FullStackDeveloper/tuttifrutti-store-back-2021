@@ -1,5 +1,3 @@
-console.clear()
-
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
@@ -9,11 +7,12 @@ require('dotenv').config()
 app.use(morgan('dev'))
 const db = require('./config/db')
 
-app.get('/', (req, res, next) => {
-  res.json({
-    success: true
-  })
-})
+// app.get('/', (req, res, next) => {
+//   res.json({
+//     success: true
+//   })
+// })
+app.use('/', require('./services/index')(db))
 
 app.use(require('./middlewares/pathNotFound'))
 
