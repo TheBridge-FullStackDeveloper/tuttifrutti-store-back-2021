@@ -1,1 +1,5 @@
-//  query index
+const {getAll} = require('./products')
+
+module.exports = {
+	getAll
+}
