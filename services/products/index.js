@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
 module.exports = db => {
-    router.use('/products', require('./products')(db))
+    router.post('/', require('./get-by-search')(db))
     return router
 }
