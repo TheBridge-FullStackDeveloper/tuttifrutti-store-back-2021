@@ -5,7 +5,7 @@ module.exports = (db) => async (req, res, next) => {
   const { token } = req.params
 
   // confirm token and update user
-  const result = await confirmUser(db, {token})
+  const [ result ] = await confirmUser(db, {token})
   if(!result){
     return next({ 
       statusCode: 400,
@@ -14,11 +14,11 @@ module.exports = (db) => async (req, res, next) => {
   }
 
   // sending confirmation email
+  await mailer.sendConfirmationMail({ to: result.email, username: result.username })
 
   res.status(200)
     .json({
       success: true,
-      message: '> Account activated'
+      message: '> Account activated, sent email with user details'
     })
-
 }

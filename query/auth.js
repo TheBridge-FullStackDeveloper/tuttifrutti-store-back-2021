@@ -23,7 +23,7 @@ const createUser = async (db, { email, username, pass, token }) => {
 
 const confirmUser = async (db, { token }) => {
   try {
-    const {rowCount} = await db.query(sql`
+    const {rowCount, rows} = await db.query(sql`
       SELECT * FROM users
       WHERE activation_token = ${token}
     `)
@@ -37,7 +37,7 @@ const confirmUser = async (db, { token }) => {
       WHERE
         activation_token = ${token}
     `)
-    return true
+    return rows
 
   } catch (e) {
     console.info('> Error at "confirmUser" query:', e.message)
