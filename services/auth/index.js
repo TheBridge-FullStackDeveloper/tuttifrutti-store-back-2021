@@ -1,7 +1,6 @@
 const router = require("express").Router();
 
 module.exports = (db) => {
-  router.use("/auth", require("./auth")(db));
-
+  router.post("/login", require("./login")(db));
   return router;
 };
