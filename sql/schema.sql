@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS products (
   reference SERIAL NOT NULL,
   stock BOOLEAN NOT NULL DEFAULT true,
   price DECIMAL NOT NULL,
+  description TEXT,
   product_pic TEXT,
   keywords TEXT[],
   offer INTEGER,

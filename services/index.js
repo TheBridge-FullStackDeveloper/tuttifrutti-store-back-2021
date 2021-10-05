@@ -1,6 +1,6 @@
 const Router = require('express').Router()
 
 module.exports = db => {
-	Router.get('/products', require('./getProducts')(db))
+	Router.use('/products', require('./products/index')(db))
 	return Router
 }

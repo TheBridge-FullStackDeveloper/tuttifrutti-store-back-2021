@@ -1,23 +1,16 @@
-const {getAll} = require('../query/index')
-
+const {getAll} = require('../../query/products')
 
 module.exports = db =>  async (req, res, next) => {
 	const items = await getAll(db)
-	const page = 1
-	// page= page || 1
- 	const per_page = 3
-	// per_page = per_page || 3
+	let page = 1
+	page= page || 1
+ 	let per_page = 3
+	per_page = per_page || 3
  	const offset = (page - 1) * per_page
 	const paginatedItems = items.slice(offset).slice(0, per_page)
 	const total_pages = Math.ceil(items.length / per_page)
 
-	console.info(items)
-	console.info(page)
-	console.info(per_page)
-	console.info(offset)
-	console.info(paginatedItems)
-	console.info(total_pages)
-	res.json({
+	res.status(200).json({
 		page: page,
 		per_page: per_page,
 		pre_page: page - 1 ? page - 1 : null,
@@ -25,5 +18,5 @@ module.exports = db =>  async (req, res, next) => {
 		total: items.length,
 		total_pages: total_pages,
 		data: paginatedItems,
-	})
+	});
 	};
