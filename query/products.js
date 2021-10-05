@@ -8,13 +8,13 @@ const countAll = async (db) => {
 };
 
 const getAll = async (db, { page, perPage }) => {
-	const test = page * perPage - perPage;
+	const offset = page * perPage - perPage;
 	try {
 		const { rows: query } = await db.query(sql`
 			SELECT *
 			FROM products
 			LIMIT ${perPage}
-			OFFSET ${test}
+			OFFSET ${offset}
 		`);
 		const { rowCount: items } = await countAll(db);
 		return { query, items };
