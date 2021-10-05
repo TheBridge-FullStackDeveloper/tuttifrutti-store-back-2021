@@ -1,5 +1,5 @@
 const { createUser } = require('../../query/auth')
-const { encrypt, confirmToken } = require('../../helpers/hash')
+const { hashing, mailer } = require('../../helpers')
 
 module.exports = (db) => async (req, res, next) => {
 
@@ -11,8 +11,8 @@ module.exports = (db) => async (req, res, next) => {
   }
 
   // create user
-  const pass = await encrypt(hash)
-  const token = await confirmToken()
+  const pass = await hashing.encrypt(hash)
+  const token = await hashing.confirmToken()
   const result = await createUser(db, { email, username, pass, token })
   if(result === false){
     return next({
@@ -22,12 +22,12 @@ module.exports = (db) => async (req, res, next) => {
   }
 
   // send confirmation mail
-
+  await mailer.sendActivationMail({ to: email, token})
 
   res.status(200)
     .json({
       success: true,
-      message: '> User successfully created'
+      message: '> Confirmation token sent to provided email'
     })
 
 };
