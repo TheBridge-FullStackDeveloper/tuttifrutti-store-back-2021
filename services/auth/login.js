@@ -1,4 +1,5 @@
 const { hash, serialize } = require("../../helpers");
+const { getUserByEmail, getUserByUsername } = require("../../query/auth");
 
 const login = (db) => async (req, res, next) => {
   const { email, username, password } = req.body;
@@ -14,7 +15,19 @@ const login = (db) => async (req, res, next) => {
     user = await getUserByUsername(db, username, hash.compare(password));
   }
 
+  const token = serialize(res, {
+    email: user.email,
+    username: user.username,
+  });
+
   if (!user) {
     return next({ error: new Error("Something went wrong") });
   }
+
+  res.status(200).json({
+    success: true,
+    data: token,
+  });
 };
+
+module.exports = login;
