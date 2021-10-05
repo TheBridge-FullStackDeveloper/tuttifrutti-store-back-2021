@@ -12,8 +12,11 @@ module.exports = db => async (req, res, next) =>{
     }
   
     res.status(200).json({
-      coincidences: result.rowCount,
-      message: result.rows,
+      status: true,
+      data: {
+        coincidences: result.rowCount,
+        featured: result.rows,
+      }
     })
   
 }
