@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 module.exports = (db) => {
-  router.use("/products", require("./products")(db));
+  router.get("/keyword", require("./get-by-keyword")(db));
 
   return router;
 };
