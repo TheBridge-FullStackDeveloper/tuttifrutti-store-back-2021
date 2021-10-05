@@ -1,18 +1,29 @@
-const { sql} = require('slonik')
+const { sql } = require("slonik");
 
-const getAll = async (db) => {
+const countAll = async (db) => {
+	return await db.query(sql`
+		SELECT *
+		FROM products
+	`);
+};
+
+const getAll = async (db, { page, perPage }) => {
+	const test = page * perPage - perPage;
 	try {
-		const {rows: products} = await db.query(sql`
-			SELECT * FROM products
-		`)
-		return products
+		const { rows: query } = await db.query(sql`
+			SELECT *
+			FROM products
+			LIMIT ${perPage}
+			OFFSET ${test}
+		`);
+		const { rowCount: items } = await countAll(db);
+		return { query, items };
+	} catch (error) {
+		console.info("Error getAll products: ", error.message);
+		return false;
 	}
-	catch(error) {
-		console.info('Error getAll products: ', error.message)
-		return false
-	}
-}
+};
 
-module.exports= {
-	getAll
-}
+module.exports = {
+	getAll,
+};
