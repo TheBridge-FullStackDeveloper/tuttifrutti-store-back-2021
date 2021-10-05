@@ -20,7 +20,7 @@ module.exports = (db) => async (req, res, next) => {
     })
   }
 
-  // send confirmation mail
+  // send activation mail
   await mailer.sendActivationMail({ to: email, token})
 
   res.status(200)

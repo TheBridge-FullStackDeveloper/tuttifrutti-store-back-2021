@@ -21,8 +21,31 @@ const createUser = async (db, { email, username, pass, token }) => {
   }
 }
 
+const confirmUser = async (db, { token }) => {
+  try {
+    const {rowCount} = await db.query(sql`
+      SELECT * FROM users
+      WHERE activation_token = ${token}
+    `)
+    if(!rowCount) throw new Error('invalid token')
+    await db.query(sql`
+      UPDATE users
+      SET
+        activation_token = null,
+        active = true,
+        updated_at = now()
+      WHERE
+        activation_token = ${token}
+    `)
+    return true
 
+  } catch (e) {
+    console.info('> Error at "confirmUser" query:', e.message)
+    return false
+  }
+}
 
 module.exports = {
-  createUser
+  createUser,
+  confirmUser,
 }
