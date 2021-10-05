@@ -1,18 +1,25 @@
 const { sql } = require('slonik')
-const { lowerCaseFn, upperCaseFn } = require('../utils')
+const { upperCaseFn } = require('../utils')
 
-const getBySearch = async (db, { data }) => {
+const getBySearch = async (db, { search, category }) => {
     try {
-        const searchlower = `%${lowerCaseFn(data).split(' ')[0]}%`
-        const searchupper = `%${upperCaseFn(data)}%`
+        let subquery
 
+        if (!category) {
+            const searchUpper = `%${upperCaseFn(search)}%`
+            subquery = sql`name LIKE ${searchUpper}`
+        }
+        if (category) subquery = sql`category::text LIKE ${category}`
+
+        if (category && search) {
+            const searchUpper = `%${upperCaseFn(search)}%`
+            subquery = sql`category::text LIKE ${category} AND name LIKE ${searchUpper}`
+        }
+        
         const result = await db.query(sql`
         SELECT *
         FROM products
-        WHERE 
-            category::text LIKE ${searchlower}
-        OR
-            name LIKE ${searchupper}
+        WHERE ${subquery}
         `)
         if (!result) {
             throw new Error('Search not found')
@@ -27,5 +34,5 @@ const getBySearch = async (db, { data }) => {
 }
 
 module.exports = {
-    getBySearch
+    getBySearch,
 }

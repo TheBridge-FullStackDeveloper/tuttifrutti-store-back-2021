@@ -1,9 +1,9 @@
 const { getBySearch } = require('../../query/products')
 
 module.exports = db => async (req, res, next) => {
-    const { search } = req.query
+    const { search, category } = req.query
 
-    const result = await getBySearch(db, { data: search })
+    const result = await getBySearch(db, { search, category })
 
     if (result === false) {
         return next({
