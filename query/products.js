@@ -1,5 +1,17 @@
-const { sql } = require('slonik')
+const { sql } = require("slonik");
 const { upperCaseFn } = require('../utils')
+
+const getByKeyword = async (db, { keyword }) => {
+  try {
+    const { rows: products } = await db.query(sql`
+            SELECT * FROM products WHERE ${keyword} = ANY (keywords)
+        `);
+    return products;
+  } catch (error) {
+    console.info("> error at 'getByKeyword' query: ", error.message);
+    return false;
+  }
+};
 
 const getBySearch = async (db, { search, category }) => {
     try {
@@ -33,6 +45,5 @@ const getBySearch = async (db, { search, category }) => {
     }
 }
 
-module.exports = {
-    getBySearch,
-}
+module.exports = { getByKeyword, getBySearch, };
+

@@ -1,6 +1,9 @@
-const router = require('express').Router()
+const router = require("express").Router();
 
-module.exports = db => {
+module.exports = (db) => {
     router.post('/', require('./get-by-search')(db))
-    return router
-}
+    router.get("/keyword", require("./get-by-keyword")(db));
+
+    return router;
+};
+
