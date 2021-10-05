@@ -1,6 +1,6 @@
-require('dotenv').config()
-const slonik = require('slonik')
+require("dotenv").config();
+const slonik = require("slonik");
 
-const db = slonik.createPool(process.env.DB_URL)
+const db = slonik.createPool(process.env.DB_URL);
 
-module.exports = db
+module.exports = db;
