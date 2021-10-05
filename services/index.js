@@ -1,8 +1,7 @@
-const Router = require('express').Router()
+const router = require("express").Router();
 
+module.exports = (db) => {
+  router.use("/products", require("./products")(db));
 
-
-module.exports = db => {
-	Router.get('/products', require('./getFeatured')(db))
-	return Router
-}
+  return router;
+};
