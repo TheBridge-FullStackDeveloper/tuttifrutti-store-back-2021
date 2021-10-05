@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const crypto = require("crypto");
 
 const encrypt = async (password) => {
   const rounds = Number(process.env.SALT);
