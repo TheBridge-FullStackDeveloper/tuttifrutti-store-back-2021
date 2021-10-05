@@ -1,4 +1,4 @@
-const {getFeatured} = require('../../query/index')
+const {getFeatured} = require('../query/index')
 
 module.exports = db => async (req, res, next) =>{
 
