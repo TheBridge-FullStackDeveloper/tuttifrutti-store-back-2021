@@ -1,12 +1,11 @@
 const { sql } = require('slonik')
-const {lowerCaseFn, upperCaseFn} = require('../utils')
+const { lowerCaseFn, upperCaseFn } = require('../utils')
+
 const getBySearch = async (db, { data }) => {
     try {
         const searchlower = `%${lowerCaseFn(data).split(' ')[0]}%`
         const searchupper = `%${upperCaseFn(data)}%`
 
-        console.log("busqueda", searchlower, searchupper)
-        
         const result = await db.query(sql`
         SELECT *
         FROM products
@@ -14,12 +13,10 @@ const getBySearch = async (db, { data }) => {
             category::text LIKE ${searchlower}
         OR
             name LIKE ${searchupper}
-    
-        
         `)
         if (!result) {
-            throw new Error('User not found')
-          }
+            throw new Error('Search not found')
+        }
         console.log(result)
         return result.rows
 
