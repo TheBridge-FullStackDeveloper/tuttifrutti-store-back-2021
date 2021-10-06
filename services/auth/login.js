@@ -4,7 +4,7 @@ const { getUserByEmail, getUserByUsername } = require("../../query/auth");
 const login = (db) => async (req, res, next) => {
   const { email, username, password } = req.body;
 
-  if ((!email || !username) && !password) {
+  if (!email || !username || !password) {
     return next({ error: new Error("Given data failed") });
   }
 
