@@ -18,14 +18,14 @@ const create = async () => {
       category product_categories NOT NULL,
       reference SERIAL NOT NULL,
       stock BOOLEAN NOT NULL DEFAULT true,
+      price DECIMAL NOT NULL,
       description TEXT,
-      price DECIMAL NOT NULL, 
       product_pic TEXT,
       keywords TEXT[],
       offer INTEGER,
       featured BOOLEAN NOT NULL DEFAULT false
       );
-    
+
     CREATE TABLE IF NOT EXISTS users (
       id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
       name TEXT,
@@ -33,7 +33,7 @@ const create = async () => {
       email TEXT UNIQUE NOT NULL,
       username TEXT UNIQUE NOT NULL,
       hash TEXT NOT NULL,
-      access_token TEXT,  
+      access_token TEXT,
       activation_token TEXT,
       active BOOLEAN NOT NULL DEFAULT false,
       address TEXT, 
@@ -42,26 +42,26 @@ const create = async () => {
       created_at TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
       updated_at TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC')
     );
-    
+
     CREATE TABLE IF NOT EXISTS orders (
       id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
       user_id uuid references users(id),
-      state order_states NOT NULL, 
+      state order_states NOT NULL,
       order_date TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
       delivery_date TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
       cart BOOLEAN NOT NULL DEFAULT false
     );
-    
+
     CREATE TABLE IF NOT EXISTS cards (
       id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
       user_id uuid references users(id),
       provider card_providers NOT NULL,
       card_number TEXT NOT NULL,
       expiration_date TEXT NOT NULL,
-      owner_name TEXT NOT NULL, 
+      owner_name TEXT NOT NULL,
       card BOOLEAN NOT NULL DEFAULT false
     );
-    
+
     CREATE TABLE IF NOT EXISTS products_orders (
       product_id uuid references products(id),
       order_id uuid references orders(id)
