@@ -1,0 +1,39 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cloudinary": "^1.27.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.3",
+    "nodemailer": "^6.6.5",
+    "slonik": "^24.1.1"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.13"
+  },
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js",
+    "docker:up": "docker-compose up",
+    "docker:start": "docker-compose start",
+    "docker:down": "docker-compose down",
+    "db:create": "node scripts/creation.js",
+    "db:seeds": "node scripts/seeds.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheBridge-FullStackDeveloper/tuttifrutti-store-back-2021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheBridge-FullStackDeveloper/tuttifrutti-store-back-2021/issues"
+  },
+  "homepage": "https://github.com/TheBridge-FullStackDeveloper/tuttifrutti-store-back-2021#readme"
+}
