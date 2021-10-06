@@ -1,3 +1,4 @@
+
 const { sql } = require('slonik')
 const { upperCaseFn } = require('../utils')
 const getFeatured = async (db) =>{
@@ -12,6 +13,7 @@ const getFeatured = async (db) =>{
         return false 
     }
 }
+
 
 
 
@@ -85,7 +87,6 @@ const getBySearch = async (db, { search, category }) => {
 		console.info('> error at "getBySearch" query: ', error.message)
 		return false
 	}
-}
 
 module.exports = { getByKeyword, getBySearch, getAll };
 
