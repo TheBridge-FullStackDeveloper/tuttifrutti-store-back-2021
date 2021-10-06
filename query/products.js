@@ -1,4 +1,17 @@
-const { sql } = require("slonik");
+const { sql } = require('slonik')
+
+const getFeatured = async (db) =>{
+    try{
+        const result = await db.query(sql`
+            SELECT *
+            FROM products
+            WHERE featured = true;
+        `)
+        return result
+    } catch(error){
+        return false 
+    }
+}
 
 
 
@@ -39,6 +52,6 @@ const getAll = async (db, { page, perPage }) => {
 };
 
 module.exports = {
-	getByKeyword,
-	getAll,
+	  getByKeyword,
+	  getAll,
 }
