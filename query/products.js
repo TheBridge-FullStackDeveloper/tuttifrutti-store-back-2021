@@ -27,7 +27,6 @@ const getByKeyword = async (db, { keyword }) => {
 
 
 module.exports = { 
-  
     getByKeyword,
     getAll,   
 };
