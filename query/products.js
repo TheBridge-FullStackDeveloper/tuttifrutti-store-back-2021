@@ -1,6 +1,8 @@
 
+
 const { sql } = require('slonik')
 const { upperCaseFn } = require('../utils')
+
 const getFeatured = async (db) =>{
     try{
         const result = await db.query(sql`
@@ -13,8 +15,6 @@ const getFeatured = async (db) =>{
         return false 
     }
 }
-
-
 
 
 const getByKeyword = async (db, { keyword }) => {
@@ -52,6 +52,7 @@ const getAll = async (db, { page, perPage }) => {
 		return false;
 	}
 };
+
 
 const getBySearch = async (db, { search, category }) => {
 	try {
