@@ -9,6 +9,8 @@ require("dotenv").config();
 app.use(morgan("dev"));
 const db = require("./config/db");
 
+app.use(express.json());
+
 app.use("/", require("./services")(db));
 
 app.use(require("./middlewares/pathNotFound"));
