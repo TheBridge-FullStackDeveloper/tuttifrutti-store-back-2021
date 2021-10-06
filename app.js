@@ -1,8 +1,8 @@
-console.clear();
+console.clear()
 
-const express = require("express");
-const app = express();
-const morgan = require("morgan");
+const express = require('express')
+const app = express()
+const morgan = require('morgan')
 
 require("dotenv").config();
 
