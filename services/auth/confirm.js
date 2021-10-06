@@ -1,5 +1,9 @@
 const { confirmUser } = require('../../query/auth')
-const { mailer } = require('../../helpers')
+// const { mailer } = require('../../helpers')
+
+const { sendMail } = require('../../config/mailer')
+const { templateFactory } = require('../../helpers/templates/confirmation')
+
 
 module.exports = (db) => async (req, res, next) => {
   const { token } = req.params
@@ -14,7 +18,8 @@ module.exports = (db) => async (req, res, next) => {
   }
 
   // sending confirmation email
-  await mailer.sendConfirmationMail({ to: result.email, username: result.username })
+  // await mailer.sendConfirmationMail({ to: result.email, username: result.username })
+  await sendMail(templateFactory)({ to: email, token})
 
   res.status(200)
     .json({

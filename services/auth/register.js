@@ -1,5 +1,8 @@
 const { createUser } = require('../../query/auth')
-const { hashing, mailer } = require('../../helpers')
+const { hashing } = require('../../helpers')
+
+const { sendMail } = require('../../config/mailer')
+// const { templateFactory } = require('../../helpers/templates/activation')
 
 module.exports = (db) => async (req, res, next) => {
   const { email, username, hash } = req.body
@@ -21,7 +24,9 @@ module.exports = (db) => async (req, res, next) => {
   }
 
   // send activation mail
-  await mailer.sendActivationMail({ to: email, token})
+  // await sendMail(templateFactory({ to: email, token}))
+
+  await sendMail({ to:email, token})
 
   res.status(200)
     .json({
