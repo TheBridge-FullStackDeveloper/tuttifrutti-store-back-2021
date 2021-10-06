@@ -8,7 +8,7 @@ const login = (db) => async (req, res, next) => {
     return next({ error: new Error("Given data failed") });
   }
 
-  let user = await getUserByEmailOrUsername(
+  const user = await getUserByEmailOrUsername(
     db,
     email,
     username,

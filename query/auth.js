@@ -2,8 +2,8 @@ const { sql } = require("slonik");
 
 const getUserByEmailOrUsername = async (
   db,
-  mail = " ",
-  username = " ",
+  mail = "",
+  username = "",
   comparationFn
 ) => {
   try {
