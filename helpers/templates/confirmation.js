@@ -1,6 +1,4 @@
-// const transporter = require('../../config/mailer')
-
-const templateFactory = ({ to, username }) => ({
+const confirmation = ({ to, username }) => ({
   from: `" 🤟 Tutteam" ${process.env.MAIL_USER}`,
   to,
   subject: `${ username }, tu cuenta ha sido verificada`,
@@ -9,6 +7,12 @@ const templateFactory = ({ to, username }) => ({
     <p> ${ username }, esto es un template de plantilla </p>  
   `
 })
+
+module.exports = {
+  // sendConfirmationMail,
+  confirmation,
+}
+
 
 // const sendConfirmationMail = async ({ to, username}) => {
 //   try {
@@ -20,7 +24,3 @@ const templateFactory = ({ to, username }) => ({
 //   }
 // }
 
-module.exports = {
-  // sendConfirmationMail,
-  templateFactory,
-}

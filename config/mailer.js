@@ -1,6 +1,4 @@
-require('dotenv').config()
 const nodemailer = require('nodemailer')
-
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -9,20 +7,20 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-const sendMail = async ({to, token}) => {
-  await transporter.sendMail({
-    from: `" 🤟 Tutteam" ${process.env.MAIL_USER}`,
-    to,
-    subject: 'Confirma tu correo',
-    html: `
-      <h2> Un último paso </h2>
-      <p> para confirmar tu cuenta, haz clic
-        <a href="${process.env.SERVER_URL}:${process.env.SERVER_PORT}/auth/confirmation/${token}">
-        <button> aquí </button>
-        </a>
-      </p>  
-    `
-  })
+const { activation } = require('../helpers/templates/activation')
+const { confirmation } = require('../helpers/templates/confirmation')
+
+// const sendMail = async ({to, token})=> {
+//   const template = activation({to, token})
+//   await transporter.sendMail(template)
+// }
+const sendMail = async ({to, token})=> {
+  const template = activation({to, token})
+  await transporter.sendMail(template)
+}
+
+module.exports = {
+  mailer: sendMail,
 }
 
 // const sendMail = async (template) => {
@@ -33,10 +31,4 @@ const sendMail = async ({to, token}) => {
 //     return false
 //   }
 // }
-
-const { activation } = require('../helpers/templates/activation')
-
-module.exports = {
-  sendMail,
-}
 
