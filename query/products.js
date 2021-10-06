@@ -28,5 +28,6 @@ const getByKeyword = async (db, { keyword }) => {
 
 module.exports = { 
     getByKeyword,
+    getFeatured,
     getAll,   
 }
