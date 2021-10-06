@@ -1,5 +1,22 @@
+<<<<<<< HEAD
 const { sql } = require("slonik");
 const { upperCaseFn } = require('../utils')
+=======
+const { sql } = require('slonik')
+
+const getFeatured = async (db) =>{
+    try{
+        const result = await db.query(sql`
+            SELECT *
+            FROM products
+            WHERE featured = true;
+        `)
+        return result
+    } catch(error){
+        return false 
+    }
+}
+>>>>>>> 71753ed67b1b34dd17991d77353a082038c290dc
 
 
 
@@ -39,6 +56,7 @@ const getAll = async (db, { page, perPage }) => {
 	}
 };
 
+<<<<<<< HEAD
 const getBySearch = async (db, { search, category }) => {
 	try {
 		if (!search && !category) {
@@ -73,6 +91,11 @@ const getBySearch = async (db, { search, category }) => {
 		console.info('> error at "getBySearch" query: ', error.message)
 		return false
 	}
+=======
+module.exports = {
+	  getByKeyword,
+	  getAll,
+>>>>>>> 71753ed67b1b34dd17991d77353a082038c290dc
 }
 
 module.exports = { getByKeyword, getBySearch, getAll };
