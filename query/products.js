@@ -87,6 +87,7 @@ const getBySearch = async (db, { search, category }) => {
 		console.info('> error at "getBySearch" query: ', error.message)
 		return false
 	}
+}
 
-module.exports = { getByKeyword, getBySearch, getAll };
+module.exports = { getByKeyword, getBySearch, getAll, getFeatured };
 
