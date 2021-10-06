@@ -4,7 +4,7 @@ const getOrders = async (db, { username }) => {
   try {
     const result =  await db.query(sql`
       SELECT * FROM orders
-      -- WHERE user_id = (select id from users where username = ${username})
+      WHERE user_id = (select id from users where username = ${username}) AND cart = true
     `)
     if (!result.rowCount) throw new Error('This user has no orders')
     return result

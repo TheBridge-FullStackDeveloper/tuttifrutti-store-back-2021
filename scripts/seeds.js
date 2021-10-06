@@ -20,8 +20,19 @@ const seed = async () => {
     ('Jorge', 'Nova', 'jnova@gmail.com', 'jnova', 'hash para prueba','C/Nueva 22, 3ºD, Madrid', '28001'),
     ('Cristina', 'Nosé', 'cris@gmail.com', 'cris', 'hash para prueba', 'C/Vieja 22, 3º Madrid', '28002');
           
-    INSERT INTO orders (state)
-    VALUES ('pending'), ('sent'), ('delivered'), ('canceled');
+    INSERT INTO orders 
+        (user_id, state, cart)
+      VALUES 
+        (( select id from users where username = 'jnova' ),'pending', true ), 
+        (( select id from users where username = 'jnova' ), 'sent', true ), 
+        (( select id from users where username = 'jnova' ), 'delivered', true), 
+        (( select id from users where username = 'jnova' ), 'delivered', true), 
+        (( select id from users where username = 'jnova' ), 'canceled', false ),
+        (( select id from users where username = 'jnova' ), 'canceled', false ),
+        (( select id from users where username = 'jnova' ), 'canceled', false ),
+        (( select id from users where username = 'cris' ), 'canceled', false ),
+        (( select id from users where username = 'cris' ), 'canceled', false ),
+        (( select id from users where username = 'cris' ), 'canceled', true );
    
     INSERT INTO cards (provider, card_number, expiration_date, owner_name)
     VALUES

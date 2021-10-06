@@ -18,12 +18,12 @@ module.exports = (db) => async (req, res, next) => {
   const totalPages = ~~(result.rowCount / perPage)
   const prevPage = page - 1 ? `/orders?page=${ page - 1}` : null
   const nextPage = totalPages > page ? `/orders?page=${ page + 1}` : null
-  
-  // failing misserably
-  const offset = page * perPage - perPage
-  const query = Object.entries(result.rows).slice(offset, page + 1)
 
-  console.info(query)
+  // failing misserably
+  // const offset = page * perPage - perPage
+  // const query = Object.entries(result.rows).slice(offset, page + 1)
+  // console.info(query)
+
 
   res.status(200)
     .json({
@@ -35,7 +35,7 @@ module.exports = (db) => async (req, res, next) => {
         totalPages: totalPages,
         totalOrders: result.rowCount,
         ordersPerPage: perPage,
-        orders: query,
+        orders: result.rows,
       }
     })
 };
