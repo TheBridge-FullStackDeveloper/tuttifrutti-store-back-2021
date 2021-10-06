@@ -8,7 +8,7 @@ module.exports = db => async (req, res, next) => {
     if (result === false) {
         return next({
             statusCode: 404,
-            error: new Error('No results')
+            error: new Error('No results found')
         })
     }
 
