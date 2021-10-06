@@ -1,29 +1,25 @@
 const { getOrders } = require('../../query/orders')
 
 module.exports = (db) => async (req, res, next) => {
-  const page = Number(req.query.page) || 1;
-  const perPage = Number(req.query.per_page) || 2;
   
   // token must provide this info:
-  const username = 'jnova' 
+  const {username, state } = req.body
+  const page = Number(req.body.page) || 1;
+  const perPage = Number(req.body.per_page) || 2;
 
-  const result = await getOrders(db, { username })
-  if(!result){
+  const { rowCount, rows } = await getOrders(db, { username, state })
+  if(!rowCount){
     return next({
       statusCode: 400,
       error: new Error('This user has no orders')
     })
   }
 
-  const totalPages = ~~(result.rowCount / perPage)
+  const totalPages = Math.ceil(rowCount / perPage)
   const prevPage = page - 1 ? `/orders?page=${ page - 1}` : null
   const nextPage = totalPages > page ? `/orders?page=${ page + 1}` : null
-
-  // failing misserably
-  // const offset = page * perPage - perPage
-  // const query = Object.entries(result.rows).slice(offset, page + 1)
-  // console.info(query)
-
+  const offset = ( page - 1 ) * perPage
+  const query = rows.slice( offset, offset + perPage )
 
   res.status(200)
     .json({
@@ -33,9 +29,9 @@ module.exports = (db) => async (req, res, next) => {
         currPage: page,
         nextPage: nextPage,
         totalPages: totalPages,
-        totalOrders: result.rowCount,
+        totalOrders: rowCount,
         ordersPerPage: perPage,
-        orders: result.rows,
+        orders: query,
       }
     })
 };

@@ -1,19 +1,20 @@
 const { sql } = require('slonik')
 
-const getOrders = async (db, { username }) => {
+const getOrders = async (db, { username, state }) => {
   try {
-    const result =  await db.query(sql`
-      SELECT * FROM orders
-      WHERE user_id = (select id from users where username = ${username}) AND cart = true
+    return await db.query(sql`
+      SELECT * 
+        FROM orders
+        WHERE 
+          user_id = (select id from users where username = ${username}) 
+          AND cart = true
+          ${state ? sql`AND state::text = ${state}` : sql``}
     `)
-    if (!result.rowCount) throw new Error('This user has no orders')
-    return result
   } catch (e) {
-    console.info('Error at "getOrders" query :', e.message)
+    console.info('Error at "getOrders" query: ', e.message)
     return false
   }
 }
-
 
 module.exports = {
   getOrders,
