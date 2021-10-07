@@ -93,7 +93,7 @@ const getBySearch = async (db, { search, category }) => {
 const newOrder = async (db, { orderId }) => {
 	try {
 		if (orderId == true) {
-			addToCart();
+			addToOrder({orderId});
 		}
 		const addOrder = await db.query(sql`
 			INSERT INTO orders (order_id)
@@ -110,9 +110,9 @@ const newOrder = async (db, { orderId }) => {
 	}
 };
 
-const addToCart = async (
+const addToOrder = async (
 	db,
-	{ productName, productId, orderTotal, orderId }
+	{ productName, productId, orderId }
 ) => {
 	try {
 		if (!orderId) {
@@ -123,11 +123,11 @@ const addToCart = async (
 			VALUES ('${productName}', '${productId}')
 			WHERE order_id = '${orderId}'
 		`);
-		console.log("AddToCart: ", addToCart);
-		console.log("AddToCart(): ", addToCart());
+		console.log("AddToCart: ", addToOrder);
+		console.log("AddToCart(): ", addToOrder());
 		return order.rows;
 	} catch (error) {
-		console.info("Error addToCart: ", error.message);
+		console.info("Error addToOrder: ", error.message);
 		return false;
 	}
 };
@@ -139,6 +139,6 @@ module.exports = {
 	getAll,
 	getFeatured,
 	newOrder,
-	addToCart,
+	addToOrder,
 };
 
