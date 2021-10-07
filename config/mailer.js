@@ -1,3 +1,6 @@
+const { confirmation, activation } = require('../helpers/templates')
+const { catcher } = require('../utils')
+
 const nodemailer = require('nodemailer')
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -7,19 +10,15 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-const { activation } = require('../helpers/templates/activation')
-const { confirmation } = require('../helpers/templates/confirmation')
+const send = transporter.sendMail.bind(transporter)
 
-const sendMail = async ({ to, token }) => {
-  try {
-    const template = activation({ to, token })
-    await transporter.sendMail(template)
-
-  } catch (error) {
-    console.info('Error at "sendMail" config: ', error.message)
-    return false
-
-  }
+const sendMail = {
+  activation: async ({ to, token }) => {
+    await catcher(send)(activation({ to, token}))
+  },
+  confirmation: async ({ to, username }) => {
+    await catcher(send)(confirmation({ to, username}))
+  },
 }
 
 module.exports = {
