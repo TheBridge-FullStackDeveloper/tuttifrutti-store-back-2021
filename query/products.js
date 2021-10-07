@@ -1,4 +1,7 @@
+
+
 const { sql } = require('slonik')
+const { upperCaseFn } = require('../utils')
 
 const getFeatured = async (db) =>{
     try{
@@ -12,7 +15,6 @@ const getFeatured = async (db) =>{
         return false 
     }
 }
-
 
 
 const getByKeyword = async (db, { keyword }) => {
@@ -51,7 +53,42 @@ const getAll = async (db, { page, perPage }) => {
 	}
 };
 
-module.exports = {
-	  getByKeyword,
-	  getAll,
+
+const getBySearch = async (db, { search, category }) => {
+	try {
+		if (!search && !category) {
+			throw new Error('No search')
+		}
+		let subquery
+
+		if (search) {
+		    const searchUpper = `%${upperCaseFn(search)}%`
+		    subquery = sql`name LIKE ${searchUpper}`
+		}
+		if (category) subquery = sql`category::text LIKE ${category}`
+
+		if (category && search) {
+		    const searchUpper = `%${upperCaseFn(search)}%`
+		    subquery = sql`category::text LIKE ${category} AND name LIKE ${searchUpper}`
+		}
+
+		const result = await db.query(sql`
+		SELECT *
+		FROM products
+		WHERE ${subquery}
+		`)
+
+		if (!result) {
+			throw new Error('Search not found')
+		}
+		console.log(result)
+		return result.rows
+
+	} catch (error) {
+		console.info('> error at "getBySearch" query: ', error.message)
+		return false
+	}
 }
+
+module.exports = { getByKeyword, getBySearch, getAll, getFeatured };
+
