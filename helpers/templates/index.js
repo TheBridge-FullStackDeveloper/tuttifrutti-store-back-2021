@@ -20,7 +20,6 @@ const confirmation = ({ to, username }) => ({
   `
 })
 
-
 module.exports = {
   activation,
   confirmation, 

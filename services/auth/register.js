@@ -1,20 +1,19 @@
 const { createUser } = require('../../query/auth')
-const { hashing } = require('../../helpers')
-
+const { hash } = require('../../helpers')
 const { sendMail } = require('../../config/mailer')
 
 module.exports = (db) => async (req, res, next) => {
-  const { email, username, hash } = req.body
+  const { email, username, password } = req.body
 
   // check if exists
-  if (!email || !username || !hash){
+  if (!email || !username || !password){
     return next({error: new Error('All fields are mandatory')})
   }
 
   // create user
-  const pass = await hashing.encrypt(hash)
-  const token = await hashing.confirmToken()
-  const result = await createUser(db, { email, username, pass, token })
+  const pass = await hash.encrypt(password)
+  const token = await hash.confirmToken()
+  const result = await createUser(db, { email, username, hash: pass, token })
   if(result === false){
     return next({
       statusCode: 400,
