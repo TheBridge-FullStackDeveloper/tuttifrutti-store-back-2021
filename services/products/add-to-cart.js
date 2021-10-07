@@ -1,4 +1,4 @@
-const { addToCart } = require("../../query/cart");
+const { addToCart } = require("../../query/products");
 
 module.exports = (db) => async (req, res, next) => {
 	const result= await addToCart(db, { productName, productId, orderId, orderTotal });

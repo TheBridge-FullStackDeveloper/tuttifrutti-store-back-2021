@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS orders (
   state order_states NOT NULL,
   order_date TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
   delivery_date TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
-  cart BOOLEAN NOT NULL DEFAULT false
+  order_total DECIMAL
 );
 
 CREATE TABLE IF NOT EXISTS cards (
@@ -68,6 +68,5 @@ CREATE TABLE IF NOT EXISTS cards (
 CREATE TABLE IF NOT EXISTS products_orders (
   product_id uuid references products(id),
   order_id uuid references orders(id),
-  order_total DECIMAL not null
-);
+  );
 
