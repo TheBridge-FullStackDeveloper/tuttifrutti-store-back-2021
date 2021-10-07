@@ -67,6 +67,8 @@ CREATE TABLE IF NOT EXISTS cards (
 
 CREATE TABLE IF NOT EXISTS products_orders (
   product_id uuid references products(id),
-  order_id uuid references orders(id)
+  order_id uuid references orders(id),
+  price DECIMAL references products(price),
+  order_total DECIMAL not null
 );
 
