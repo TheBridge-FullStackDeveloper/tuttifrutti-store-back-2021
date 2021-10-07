@@ -10,25 +10,18 @@ const transporter = nodemailer.createTransport({
 const { activation } = require('../helpers/templates/activation')
 const { confirmation } = require('../helpers/templates/confirmation')
 
-// const sendMail = async ({to, token})=> {
-//   const template = activation({to, token})
-//   await transporter.sendMail(template)
-// }
-const sendMail = async ({to, token})=> {
-  const template = activation({to, token})
-  await transporter.sendMail(template)
+const sendMail = async ({ to, token }) => {
+  try {
+    const template = activation({ to, token })
+    await transporter.sendMail(template)
+
+  } catch (error) {
+    console.info('Error at "sendMail" config: ', error.message)
+    return false
+
+  }
 }
 
 module.exports = {
-  mailer: sendMail,
+  sendMail,
 }
-
-// const sendMail = async (template) => {
-//   try {
-//     return await transporter.sendMail(template)
-//   } catch (error) {
-//     console.info('Error at "sendMail" config: ', error.message)
-//     return false
-//   }
-// }
-
