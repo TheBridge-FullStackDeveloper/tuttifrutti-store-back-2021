@@ -8,6 +8,6 @@ module.exports = (db) => {
   router.get("/featured", require("./get-featured")(db));
   router.get("/", require("./getProducts")(db));
 
-    return router;
+  return router;
 };
 
