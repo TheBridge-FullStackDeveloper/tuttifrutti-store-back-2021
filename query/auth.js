@@ -23,22 +23,23 @@ const createUser = async (db, { email, username, hash, token }) => {
 
 const confirmUser = async (db, { token }) => {
   try {
-    const {rowCount, rows} = await db.query(sql`
-      SELECT * FROM users
-      WHERE activation_token = ${token}
-    `)
-    if(!rowCount) throw new Error('invalid token')
-    await db.query(sql`
-      UPDATE users
-      SET
-        activation_token = null,
-        active = true,
-        updated_at = now()
-      WHERE
-        activation_token = ${token}
-    `)
-    return rows
-
+    return await db.transaction( async tx => {
+      const {rowCount, rows} = await tx.query(sql`
+        SELECT * FROM users
+        WHERE activation_token = ${token}
+      `)
+      if(!rowCount) throw new Error('invalid token')
+      await tx.query(sql`
+        UPDATE users
+        SET
+          activation_token = null,
+          active = true,
+          updated_at = now()
+        WHERE
+          activation_token = ${token}
+      `)
+      return rows
+    })
   } catch (e) {
     console.info('> Error at "confirmUser" query:', e.message)
     return false
