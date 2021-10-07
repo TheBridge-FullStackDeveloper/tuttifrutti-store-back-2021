@@ -7,7 +7,7 @@ module.exports = (db) => {
 
   router.get("/featured", require("./get-featured")(db));
   router.get("/", require("./getProducts")(db));
-  router.post("/orders", require("./add-to-order")(db));
+  router.post("/orders/:order", require("./add-to-order")(db));
 
   return router;
 };
