@@ -2,11 +2,8 @@ const { createCard } = require("../../query/cards");
 const { hash } = require("../../helpers");
 
 const newCard = (db) => async (req, res, next) => {
-  console.log("hola");
-
   const { provider, card_number, expiration_date, owner_name } = req.body;
-  const { accessToken } = res.locals.accessToken;
-  console.log("locals-token", accessToken);
+  const { email, username } = res.locals.user;
 
   if (!provider || !card_number || !expiration_date || !owner_name) {
     return next({ error: new Error("Given data failed") });
@@ -19,6 +16,8 @@ const newCard = (db) => async (req, res, next) => {
     cardNumber,
     expirationDate: expiration_date,
     ownerName: owner_name,
+    email,
+    username,
   });
 
   if (!result) {
