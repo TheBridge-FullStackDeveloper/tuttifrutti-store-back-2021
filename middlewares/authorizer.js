@@ -1,8 +1,7 @@
 const { deserialize } = require("../helpers");
 
-const authorization = (req, _, next) => {
+const authorization = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log("auth", authorization);
 
   if (!authorization) {
     return next({
@@ -20,11 +19,9 @@ const authorization = (req, _, next) => {
     });
   }
 
-  const accessToken = deserialize(token);
-  console.log("linea 24", accessToken);
-
-  res.locals.accessToken = accessToken;
-  console.log(res.locals);
+  const user = deserialize(token);
+  console.log("des", user);
+  res.locals.user = user;
   next();
 };
 
