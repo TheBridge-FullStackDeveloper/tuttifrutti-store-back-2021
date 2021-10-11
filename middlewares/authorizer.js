@@ -20,7 +20,7 @@ const authorization = (req, res, next) => {
   }
 
   const user = deserialize(token);
-  console.log("des", user);
+
   res.locals.user = user;
   next();
 };

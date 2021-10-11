@@ -62,14 +62,14 @@ const getBySearch = async (db, { search, category }) => {
 		let subquery
 
 		if (search) {
-		    const searchUpper = `%${upperCaseFn(search)}%`
-		    subquery = sql`name LIKE ${searchUpper}`
+			const searchUpper = `%${upperCaseFn(search)}%`
+			subquery = sql`name LIKE ${searchUpper}`
 		}
 		if (category) subquery = sql`category::text LIKE ${category}`
 
 		if (category && search) {
-		    const searchUpper = `%${upperCaseFn(search)}%`
-		    subquery = sql`category::text LIKE ${category} AND name LIKE ${searchUpper}`
+			const searchUpper = `%${upperCaseFn(search)}%`
+			subquery = sql`category::text LIKE ${category} AND name LIKE ${searchUpper}`
 		}
 
 		const result = await db.query(sql`
@@ -81,7 +81,7 @@ const getBySearch = async (db, { search, category }) => {
 		if (!result) {
 			throw new Error('Search not found')
 		}
-		console.log(result)
+
 		return result.rows
 
 	} catch (error) {
