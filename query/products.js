@@ -62,14 +62,14 @@ const getBySearch = async (db, { search, category }) => {
 		let subquery
 
 		if (search) {
-		    const searchUpper = `%${upperCaseFn(search)}%`
-		    subquery = sql`name LIKE ${searchUpper}`
+			const searchUpper = `%${upperCaseFn(search)}%`
+			subquery = sql`name LIKE ${searchUpper}`
 		}
 		if (category) subquery = sql`category::text LIKE ${category}`
 
 		if (category && search) {
-		    const searchUpper = `%${upperCaseFn(search)}%`
-		    subquery = sql`category::text LIKE ${category} AND name LIKE ${searchUpper}`
+			const searchUpper = `%${upperCaseFn(search)}%`
+			subquery = sql`category::text LIKE ${category} AND name LIKE ${searchUpper}`
 		}
 
 		const result = await db.query(sql`
@@ -92,12 +92,12 @@ const getBySearch = async (db, { search, category }) => {
 
 const newOrder = async (db, { orderId }) => {
 	try {
-		if (orderId == true) {
+		if (orderId) {
 			addToOrder({orderId});
 		}
 		const addOrder = await db.query(sql`
 			INSERT INTO orders (order_id)
-			VALUES ('${order_id})
+			VALUES ('${orderId})
 		`);
 		console.log("OrderId: ", orderId);
 		console.log("newOrder: ", newOrder);
@@ -109,6 +109,17 @@ const newOrder = async (db, { orderId }) => {
 		return false;
 	}
 };
+
+const getOrder = async (db, {orderId}) => {
+	try {
+		if(!orderId){
+			return newOrder()
+		}
+	} catch (error) {
+		console.info("Error at getOrders query: ", error.message);
+		return false;
+	}
+}
 
 const addToOrder = async (
 	db,
@@ -140,5 +151,6 @@ module.exports = {
 	getFeatured,
 	newOrder,
 	addToOrder,
+	getOrder,
 };
 
