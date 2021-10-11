@@ -138,10 +138,29 @@ const addToOrder = async (
 		console.log("AddToCart(): ", addToOrder());
 		return order.rows;
 	} catch (error) {
-		console.info("Error addToOrder: ", error.message);
+		console.info("Error at addToOrder query: ", error.message);
 		return false;
 	}
 };
+
+const getOrdersInCart = async (
+	db,
+	{state}
+) => {
+	try {
+		if(state !== 'pending'){
+			return 'Search yielded no results'
+		}
+		const { rows: order } = await db.query(sql`
+			SELECT id FROM orders
+			WHERE state = 'pending'
+		`);
+		return order.rows;
+	} catch (error) {
+		console.info('Error at getOrdersInCart query: ', error.message);
+        return false;
+	}
+}
 
 
 module.exports = {
@@ -152,5 +171,6 @@ module.exports = {
 	newOrder,
 	addToOrder,
 	getOrder,
+	getOrdersInCart,
 };
 
