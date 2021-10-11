@@ -81,7 +81,7 @@ const getBySearch = async (db, { search, category }) => {
 		if (!result) {
 			throw new Error('Search not found')
 		}
-		console.log(result)
+
 		return result.rows
 
 	} catch (error) {

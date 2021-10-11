@@ -4,4 +4,13 @@ const toJWT = (email, username) => {
   return jwt.sign({ email, username }, process.env.JWT_SECRET);
 };
 
-module.exports = { toJWT };
+const fromJWT = (accessToken) => {
+  try {
+    return jwt.verify(accessToken, process.env.JWT_SECRET);
+  } catch (error) {
+    console.info('> error at "fromJWT" helper: ', error);
+    return false;
+  }
+};
+
+module.exports = { toJWT, fromJWT };
