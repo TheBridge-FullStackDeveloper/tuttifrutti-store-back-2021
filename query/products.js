@@ -12,7 +12,7 @@ const getFeatured = async (db) =>{
         `)
         return result
     } catch(error){
-        return false 
+        return false
     }
 }
 
@@ -90,5 +90,67 @@ const getBySearch = async (db, { search, category }) => {
 	}
 }
 
-module.exports = { getByKeyword, getBySearch, getAll, getFeatured };
+const newOrder = async (db, { orderId }) => {
+	try {
+		if (orderId) {
+			addToOrder({orderId});
+		}
+		const addOrder = await db.query(sql`
+			INSERT INTO orders (order_id)
+			VALUES ('${orderId})
+		`);
+		console.log("OrderId: ", orderId);
+		console.log("newOrder: ", newOrder);
+		console.log("newOrder(): ", newOrder());
+		return addOrder.rows;
+
+	} catch (error) {
+		console.info("Error at newOrder query: ", error.message);
+		return false;
+	}
+};
+
+const getOrder = async (db, {orderId}) => {
+	try {
+		if(!orderId){
+			return newOrder()
+		}
+	} catch (error) {
+		console.info("Error at getOrders query: ", error.message);
+		return false;
+	}
+}
+
+const addToOrder = async (
+	db,
+	{ productName, productId, orderId }
+) => {
+	try {
+		if (!orderId) {
+			newOrder();
+		}
+		const { rows: order } = await db.query(sql`
+			INSERT INTO products_orders (product_name, product_id)
+			VALUES ('${productName}', '${productId}')
+			WHERE order_id = '${orderId}'
+		`);
+		console.log("AddToCart: ", addToOrder);
+		console.log("AddToCart(): ", addToOrder());
+		return order.rows;
+	} catch (error) {
+		console.info("Error addToOrder: ", error.message);
+		return false;
+	}
+};
+
+
+module.exports = {
+	getByKeyword,
+	getBySearch,
+	getAll,
+	getFeatured,
+	newOrder,
+	addToOrder,
+	getOrder,
+};
 
