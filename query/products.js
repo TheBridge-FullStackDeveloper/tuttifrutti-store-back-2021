@@ -145,23 +145,21 @@ const addToOrder = async (
 
 const getOrdersInCart = async (
 	db,
-	{state}
+	{username}
 ) => {
 	try {
-		if(state !== 'pending'){
-			return 'Search yielded no results'
-		}
-		const { rows: order } = await db.query(sql`
-			SELECT id FROM orders
-			WHERE state = 'pending'
+		const { result } = await db.query(sql`
+			SELECT o.id FROM orders AS o
+			INNER JOIN users as u
+			ON o.user_id = u.id
+			WHERE o.state = 'pending' AND u.username= ${username}
 		`);
-		return order.rows;
+		return result.rows;
 	} catch (error) {
 		console.info('Error at getOrdersInCart query: ', error.message);
         return false;
 	}
 }
-
 
 module.exports = {
 	getByKeyword,
