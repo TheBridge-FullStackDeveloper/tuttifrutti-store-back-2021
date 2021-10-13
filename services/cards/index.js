@@ -11,6 +11,8 @@ module.exports = (db) => {
   );
   router.put(
     "/update",
+    authorization,
+    createCardValidation,
     require("./update-card")(db)
   );
 

@@ -7,15 +7,22 @@ const updateCard = async (db, {
   owner_name,
   email,
   username,
+  id
 }) => {
   try {
-    const { rows } = await db.maybeOne(sql`
+    console.log(id)
+    const result = await db.query(sql`
         UPDATE cards
         SET
-            
-        
-        
+            provider = ${provider},
+            card_number = ${card_number},
+            expiration_date = ${expiration_date},
+            owner_name = ${owner_name}
+        WHERE
+              id = ${id}
         `)
+        console.log(result)
+        return result.rows
   } catch (error) {
     console.info("> error at 'updateCard' query: ", error.message);
     return false;
