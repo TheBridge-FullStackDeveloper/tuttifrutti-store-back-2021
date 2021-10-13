@@ -6,7 +6,10 @@ const morgan = require("morgan");
 
 require("dotenv").config();
 
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 app.use(morgan("dev"));
+
 const db = require("./config/db");
 
 app.use(express.json());
