@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS users (
   access_token TEXT,
   activation_token TEXT,
   active BOOLEAN NOT NULL DEFAULT false,
-  address TEXT, 
+  address TEXT,
   postal_code TEXT,
   profile_pic TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
@@ -67,6 +67,6 @@ CREATE TABLE IF NOT EXISTS cards (
 
 CREATE TABLE IF NOT EXISTS products_orders (
   product_id uuid references products(id),
-  order_id uuid references orders(id),
+  order_id uuid references orders(id)
   );
 

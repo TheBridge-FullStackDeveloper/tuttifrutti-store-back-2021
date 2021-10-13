@@ -90,19 +90,15 @@ const getBySearch = async (db, { search, category }) => {
 	}
 }
 
-const newOrder = async (db, { orderId }) => {
+const newOrder = async (db) => {
 	try {
-		if (orderId) {
-			addToOrder({orderId});
-		}
 		const addOrder = await db.query(sql`
-			INSERT INTO orders (order_id)
-			VALUES ('${orderId})
+			INSERT INTO orders (state)
+			VALUES ('pending')
+			RETURNING id;
 		`);
-		console.log("OrderId: ", orderId);
-		console.log("newOrder: ", newOrder);
-		console.log("newOrder(): ", newOrder());
-		return addOrder.rows;
+		console.log(addOrder)
+		return addOrder.rows[0].id;
 
 	} catch (error) {
 		console.info("Error at newOrder query: ", error.message);
@@ -110,33 +106,17 @@ const newOrder = async (db, { orderId }) => {
 	}
 };
 
-const getOrder = async (db, {orderId}) => {
-	try {
-		if(!orderId){
-			return newOrder()
-		}
-	} catch (error) {
-		console.info("Error at getOrders query: ", error.message);
-		return false;
-	}
-}
 
 const addToOrder = async (
 	db,
-	{ productName, productId, orderId }
+	{ productId, orderId }
 ) => {
 	try {
-		if (!orderId) {
-			newOrder();
-		}
 		const { rows: order } = await db.query(sql`
-			INSERT INTO products_orders (product_name, product_id)
-			VALUES ('${productName}', '${productId}')
-			WHERE order_id = '${orderId}'
+			INSERT INTO products_orders (product_id, order_id)
+			VALUES (${productId},${orderId})
 		`);
-		console.log("AddToCart: ", addToOrder);
-		console.log("AddToCart(): ", addToOrder());
-		return order.rows;
+		return order;
 	} catch (error) {
 		console.info("Error addToOrder: ", error.message);
 		return false;
@@ -151,6 +131,5 @@ module.exports = {
 	getFeatured,
 	newOrder,
 	addToOrder,
-	getOrder,
 };
 
