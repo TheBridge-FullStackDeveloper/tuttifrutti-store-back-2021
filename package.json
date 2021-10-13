@@ -14,8 +14,16 @@
     "slonik": "^24.1.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^13.2.0",
+    "@commitlint/config-conventional": "^13.2.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.2",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.13"
+    "nodemon": "^2.0.13",
+    "prettier": "^2.4.1"
   },
   "scripts": {
     "dev": "nodemon app.js",
@@ -24,7 +32,9 @@
     "docker:start": "docker-compose start",
     "docker:down": "docker-compose down",
     "db:create": "node scripts/creation.js",
-    "db:seeds": "node scripts/seeds.js"
+    "db:drop": "node scripts/drops.js",
+    "db:seeds": "node scripts/seeds.js",
+    "db:reset": "npm run db:drop && npm run db:create && npm run db:seeds"
   },
   "repository": {
     "type": "git",
