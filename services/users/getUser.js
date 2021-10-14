@@ -1,6 +1,6 @@
 const { getUserData } = require("../../query/user");
 
-module.exports = (db) => async (req, res, next) => {
+module.exports = (db) => async (req, res) => {
 	//This variable is temporary. It should be replaced by token info.
 	const { username } = req.query;
 	const [result] = await getUserData(db, {username})

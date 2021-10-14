@@ -1,4 +1,4 @@
-const { encrypt, compare } = require("./hash");
+const { encrypt, compare, confirmToken } = require("./hash");
 const { toJWT, fromJWT } = require("./jwt");
 
 const serialize = (res, { email, username }) => {
@@ -12,6 +12,6 @@ const deserialize = (token) => {
 
 module.exports = {
   serialize,
+  hash: { encrypt, compare, confirmToken },
   deserialize,
-  hash: { encrypt, compare },
 };

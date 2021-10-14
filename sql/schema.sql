@@ -31,16 +31,16 @@ CREATE TABLE IF NOT EXISTS products (
 
 CREATE TABLE IF NOT EXISTS users (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  name TEXT NOT NULL,
-  surname TEXT NOT NULL,
+  name TEXT,
+  surname TEXT,
   email TEXT UNIQUE NOT NULL,
   username TEXT UNIQUE NOT NULL,
   hash TEXT NOT NULL,
   access_token TEXT,
   activation_token TEXT,
   active BOOLEAN NOT NULL DEFAULT false,
-  address TEXT NOT NULL,
-  postal_code TEXT NOT NULL,
+  address TEXT,
+  postal_code TEXT,
   profile_pic TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
   updated_at TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC')
@@ -67,6 +67,6 @@ CREATE TABLE IF NOT EXISTS cards (
 
 CREATE TABLE IF NOT EXISTS products_orders (
   product_id uuid references products(id),
-  order_id uuid references orders(id),
+  order_id uuid references orders(id)
   );
 

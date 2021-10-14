@@ -1,7 +1,7 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const db = require("../config/db");
-const { sql } = require("slonik");
+const db = require('../config/db');
+const { sql } = require('slonik');
 const create = async () => {
   try {
     await db.query(sql`
@@ -64,13 +64,13 @@ const create = async () => {
 
     CREATE TABLE IF NOT EXISTS products_orders (
       product_id uuid references products(id),
-      order_id uuid references orders(id),
+      order_id uuid references orders(id)
     );
     `);
-    console.info("> creation done! 🚀");
+    console.info('> creation done! 🚀');
   } catch (error) {
-    console.info("> creation error! ❌");
-    console.info(">", error.message);
+    console.info('> creation error! ❌');
+    console.info('>', error.message);
   }
 };
 

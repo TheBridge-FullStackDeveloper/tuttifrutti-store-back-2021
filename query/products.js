@@ -157,5 +157,5 @@ module.exports = {
   newOrder,
   addToOrder,
   getOrder,
-  getPendingOrdersByUser,
+  getPendingOrdersByUser
 };

@@ -32,7 +32,9 @@
     "docker:start": "docker-compose start",
     "docker:down": "docker-compose down",
     "db:create": "node scripts/creation.js",
-    "db:seeds": "node scripts/seeds.js"
+    "db:drop": "node scripts/drops.js",
+    "db:seeds": "node scripts/seeds.js",
+    "db:reset": "npm run db:drop && npm run db:create && npm run db:seeds"
   },
   "repository": {
     "type": "git",
