@@ -1,6 +1,7 @@
-require('dotenv').config()
-const nodemailer = require('nodemailer')
+const { confirmation, activation } = require('../helpers/templates')
+const { catcher } = require('../utils')
 
+const nodemailer = require('nodemailer')
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -9,4 +10,17 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-module.exports = transporter
+const send = transporter.sendMail.bind(transporter)
+
+const sendMail = {
+  activation: async ({ to, token }) => {
+    await catcher(send)(activation({ to, token}))
+  },
+  confirmation: async ({ to, username }) => {
+    await catcher(send)(confirmation({ to, username}))
+  },
+}
+
+module.exports = {
+  sendMail,
+}

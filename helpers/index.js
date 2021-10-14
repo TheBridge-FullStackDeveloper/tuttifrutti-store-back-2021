@@ -1,13 +1,17 @@
-const { sendActivationMail, sendConfirmationMail } = require('./mailer')
-const { encrypt, confirmToken } = require('./hash')
+const { encrypt, compare, confirmToken } = require("./hash");
+const { toJWT, fromJWT } = require("./jwt");
+
+const serialize = (res, { email, username }) => {
+  const accessToken = toJWT(email, username);
+  return accessToken;
+};
+
+const deserialize = (token) => {
+  return fromJWT(token);
+};
 
 module.exports = {
-  mailer: { 
-    sendActivationMail,
-    sendConfirmationMail,
-  },
-  hashing: {
-    encrypt,
-    confirmToken,
-  },
-}
+  serialize,
+  hash: { encrypt, compare, confirmToken },
+  deserialize,
+};

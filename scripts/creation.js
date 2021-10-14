@@ -1,7 +1,7 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const db = require("../config/db");
-const { sql } = require("slonik");
+const db = require('../config/db');
+const { sql } = require('slonik');
 const create = async () => {
   try {
     await db.query(sql`
@@ -49,7 +49,7 @@ const create = async () => {
       state order_states NOT NULL,
       order_date TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
       delivery_date TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
-      cart BOOLEAN NOT NULL DEFAULT false
+      order_total DECIMAL
     );
 
     CREATE TABLE IF NOT EXISTS cards (
@@ -67,10 +67,10 @@ const create = async () => {
       order_id uuid references orders(id)
     );
     `);
-    console.info("> creation done! 🚀");
+    console.info('> creation done! 🚀');
   } catch (error) {
-    console.info("> creation error! ❌");
-    console.info(">", error.message);
+    console.info('> creation error! ❌');
+    console.info('>', error.message);
   }
 };
 

@@ -1,11 +1,15 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 const crypto = require('crypto')
 
-const encrypt = async (hash) => {
-  const rounds = Number(process.env.BC_SALT)
-  const salt = await bcrypt.genSalt(rounds)
-  return await bcrypt.hash(hash, salt)
-}
+const encrypt = async (password) => {
+  const rounds = Number(process.env.SALT);
+  const salt = await bcrypt.genSalt(rounds);
+  return await bcrypt.hash(password, salt);
+};
+
+const compare = (password) => async (hash) => {
+  return await bcrypt.compare(password, hash);
+};
 
 const confirmToken = async() => {
   return crypto.randomBytes(32).toString('hex')
@@ -13,5 +17,6 @@ const confirmToken = async() => {
 
 module.exports = {
   encrypt,
+  compare,
   confirmToken,
-}
+};
