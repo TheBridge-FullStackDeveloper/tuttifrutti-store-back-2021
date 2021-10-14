@@ -1,20 +1,22 @@
-const { addToCart } = require("../../query/products");
+const { newOrder, addToOrder } = require("../../query/products");
 
 module.exports = (db) => async (req, res, next) => {
-	const result= await addToCart(db, { productRef, orderId });
-
-	const {productRef} = req.body.productRef;
-	const {orderId} = req.body.orderId;
+	const {productId} = req.body;
+	let {orderId} = req.body;
+	if(!orderId){
+		orderId = await newOrder(db)
+	}
+	const result= await addToOrder(db, { productId, orderId });
 
 	if(!result) {
 		return next({
 			statuscode: 400,
-			error: new Error("Something went wrong")
+			error: new Error("Something went wrong at AddToOrder")
 		})
 	}
 
 	res.status(200).json({
-		productRef: productRef,
+		productId: productId,
 		orderId: orderId,
 	});
 };
