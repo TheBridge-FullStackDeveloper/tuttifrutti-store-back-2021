@@ -21,18 +21,18 @@ const seed = async () => {
     ('Cristina', 'Nosé', 'cris@gmail.com', 'cris', 'hash para prueba', 'C/Vieja 22, 3º Madrid', '28002');
           
     INSERT INTO orders 
-        (user_id, state, cart)
+        (user_id, state)
       VALUES 
-        (( select id from users where username = 'jnova' ),'pending', true ), 
-        (( select id from users where username = 'jnova' ), 'sent', true ), 
-        (( select id from users where username = 'jnova' ), 'delivered', true), 
-        (( select id from users where username = 'jnova' ), 'delivered', true), 
-        (( select id from users where username = 'jnova' ), 'canceled', false ),
-        (( select id from users where username = 'jnova' ), 'canceled', false ),
-        (( select id from users where username = 'jnova' ), 'canceled', false ),
-        (( select id from users where username = 'cris' ), 'canceled', false ),
-        (( select id from users where username = 'cris' ), 'canceled', false ),
-        (( select id from users where username = 'cris' ), 'canceled', true );
+        (( select id from users where username = 'jnova' ),'pending'), 
+        (( select id from users where username = 'jnova' ), 'sent'), 
+        (( select id from users where username = 'jnova' ), 'delivered', 
+        (( select id from users where username = 'jnova' ), 'delivered', 
+        (( select id from users where username = 'jnova' ), 'canceled'),
+        (( select id from users where username = 'jnova' ), 'canceled'),
+        (( select id from users where username = 'jnova' ), 'canceled'),
+        (( select id from users where username = 'cris' ), 'canceled'),
+        (( select id from users where username = 'cris' ), 'canceled'),
+        (( select id from users where username = 'cris' ), 'canceled');
    
     INSERT INTO cards (provider, card_number, expiration_date, owner_name)
     VALUES

@@ -7,7 +7,6 @@ const getOrders = async (db, { username, state }) => {
         FROM orders
         WHERE 
           user_id = (select id from users where username = ${username}) 
-          AND cart = true
           ${state ? sql`AND state::text = ${state}` : sql``}
     `)
   } catch (e) {
