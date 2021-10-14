@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS users (
   access_token TEXT,
   activation_token TEXT,
   active BOOLEAN NOT NULL DEFAULT false,
-  address TEXT,
+  address TEXT, 
   postal_code TEXT,
   profile_pic TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'),
