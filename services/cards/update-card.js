@@ -3,7 +3,6 @@ const { updateCard } = require("../../query/cards")
 
 module.exports = db => async (req, res, next) => {
   const { provider, card_number, expiration_date, owner_name, id } = req.body;
-  const { email, username } = res.locals.user;
 
   const cardNumber = await hash.encrypt(card_number);
 
@@ -12,8 +11,6 @@ module.exports = db => async (req, res, next) => {
     card_number: cardNumber,
     expiration_date,
     owner_name,
-    email,
-    username,
     id
   });
 
