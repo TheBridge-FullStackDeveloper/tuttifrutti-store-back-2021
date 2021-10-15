@@ -1,6 +1,7 @@
 const { hash } = require('../../helpers');
 const { sendMail } = require('../../config/mailer');
 const { getUserData } = require('../../query/user');
+const { updateToken } = require('../../query/auth');
 
 const passwordForgotten = (db) => async (req, res, next) => {
   const { email, username } = req.body;
@@ -15,7 +16,7 @@ const passwordForgotten = (db) => async (req, res, next) => {
     return next({ error: new Error('User does not exist.') });
   }
 
-  const token = hash.createToken();
+  const token = await hash.createConfirmToken();
 
   const newToken = await updateToken(db, token, { email, username });
 
@@ -23,7 +24,7 @@ const passwordForgotten = (db) => async (req, res, next) => {
     return next({ error: new Error('Something went wrong.') });
   }
 
-  await sendMail.passwordForgotten({ email: user.email, token });
+  await sendMail.passwordUpdate({ email: user.email, token });
 
   res.status(200).json({
     success: true,
