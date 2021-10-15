@@ -90,9 +90,22 @@ const updateToken = async (
   }
 };
 
+const getByToken = async (db, token) => {
+  try {
+    const { email, username } = await db.one(
+      sql`SELECT username, email FROM users WHERE activation_token LIKE ${token}`
+    );
+    return { email, username };
+  } catch (error) {
+    console.info('error at getByToken query:', error.message);
+    return false;
+  }
+};
+
 module.exports = {
   createUser,
   confirmUser,
   getUserByEmailOrUsername,
   updateToken,
+  getByToken,
 };
