@@ -22,11 +22,11 @@ const confirmation = ({ to, username }) => ({
 
 const passwordUpdate = ({ email, token }) => ({
   from: `" 🤟 Tutteam" ${process.env.MAIL_USER}`,
-  to,
+  to: `${email}`,
   subject: 'Contraseña olvidada',
   html: `
   <h2>¿Has olvidado tu contraseña?</h2>
-  <p>Haz clicl <a href="http://localhost:3000/auth/password/request?token=${token}&email=${email}"> aquí </a> para poder obtener una nueva contraseña</p>
+  <p>Haz clicl <a href="${process.env.SERVER_URL}:${process.env.SERVER_PORT}/auth/password/request?token=${token}&email=${email}"> aquí </a> para poder obtener una nueva contraseña</p>
   <p>Gracias por tu confianza</p>
   `,
 });
