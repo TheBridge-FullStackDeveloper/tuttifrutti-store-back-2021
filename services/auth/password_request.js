@@ -1,6 +1,6 @@
 const { hash } = require('../../helpers');
 const { getByToken } = require('../../query/auth');
-const { updateUser } = require('../../query/user');
+const { updateUserPassword } = require('../../query/user');
 
 const newPassword = (db) => async (req, res, next) => {
   const { email, token } = req.query;
@@ -13,7 +13,10 @@ const newPassword = (db) => async (req, res, next) => {
   }
   const newHash = await hash.encrypt(password);
 
-  const newUser = await updateUser(db, { newHash, email: userCheck.email });
+  const newUser = await updateUserPassword(db, {
+    newHash,
+    email: userCheck.email,
+  });
 
   if (!newUser) {
     return next({ error: new Error('Error happened') });

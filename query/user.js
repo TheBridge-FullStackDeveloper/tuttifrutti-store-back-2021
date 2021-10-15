@@ -1,5 +1,19 @@
 const { sql } = require('slonik');
 
+const upDateUser = async (db, paramsContent, userNameRes) => {
+  const { name, email, address, surname, postal_code, username } =
+    paramsContent;
+  try {
+    return await db.query(sql`
+		UPDATE users 
+            SET name = ${name}, surname = ${surname}, email = ${email} , address = ${address},  postal_code = ${postal_code}, username = ${username}
+            WHERE username = ${userNameRes}`);
+  } catch (error) {
+    console.info("> error at 'upDateUser' query: ", error.message);
+    return false;
+  }
+};
+
 const getUserData = async (db, { email, username }) => {
   let whereClause = '';
   if (username) {
@@ -21,7 +35,7 @@ const getUserData = async (db, { email, username }) => {
   }
 };
 
-const updateUser = async (db, user) => {
+const updateUserPassword = async (db, user) => {
   try {
     await db.query(
       sql`UPDATE users SET hash=${user.newHash}, activation_token=NULL WHERE email LIKE ${user.email}`
@@ -34,6 +48,7 @@ const updateUser = async (db, user) => {
 };
 
 module.exports = {
+  upDateUser,
   getUserData,
-  updateUser,
+  updateUserPassword,
 };

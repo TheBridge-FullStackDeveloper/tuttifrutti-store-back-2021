@@ -1,5 +1,26 @@
-const { sql } = require("slonik");
+const { sql } = require('slonik');
 
+const updateCard = async (
+  db,
+  { provider, card_number, expiration_date, owner_name, id }
+) => {
+  try {
+    const result = await db.query(sql`
+        UPDATE cards
+        SET
+            provider = ${provider},
+            card_number = ${card_number},
+            expiration_date = ${expiration_date},
+            owner_name = ${owner_name}
+        WHERE
+              id = ${id}
+        `);
+    return result.rows;
+  } catch (error) {
+    console.info("> error at 'updateCard' query: ", error.message);
+    return false;
+  }
+};
 const createCard = async (db, data) => {
   try {
     const { rows } = await db.query(sql`
@@ -14,4 +35,4 @@ const createCard = async (db, data) => {
   }
 };
 
-module.exports = { createCard };
+module.exports = { createCard, updateCard };

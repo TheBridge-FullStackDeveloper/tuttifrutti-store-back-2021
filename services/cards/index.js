@@ -9,6 +9,12 @@ module.exports = (db) => {
     createCardValidation,
     require("./create-card")(db)
   );
+  router.put(
+    "/update",
+    authorization,
+    createCardValidation,
+    require("./update-card")(db)
+  );
 
   return router;
 };
