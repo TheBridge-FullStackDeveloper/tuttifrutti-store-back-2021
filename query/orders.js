@@ -15,9 +15,9 @@ const getOrders = async (db, { username, state }) => {
   }
 }
 
-const getOrderByDate = async (db, { username, date }) => {
+const getOrderByDate = async (db, { username, filterDate }) => {
   try {
-    return await db.query(sql`
+    const result = await db.query(sql`
     SELECT u.id, u.username, p.name, o.order_date, o.state
     FROM users u 
       INNER JOIN orders o
@@ -26,9 +26,10 @@ const getOrderByDate = async (db, { username, date }) => {
         ON o.id = po.order_id
       INNER JOIN products p
         ON po.product_id = p.id
-    WHERE u.username = ${username} AND o.order_date <= ${date}
+    WHERE u.username = ${username} AND o.order_date >= ${filterDate}
     ORDER BY o.order_date
     `)
+    return result
   } catch (e) {
     console.info('Error at "getOrderByDate" query: ', e.message)
     return false
