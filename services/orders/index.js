@@ -6,6 +6,7 @@ module.exports = (db) => {
   router.get('/orders', require('./getOrder')(db));
   router.post("/:order", require("./addToOrder")(db));
   router.get("/orders", authorization, require("./getOrdersInCart")(db));
+  router.get("/ordersByDate", authorization, require("./get-order-by-date")(db));
 
   return router;
 };
