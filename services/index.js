@@ -3,11 +3,11 @@ const router = require("express").Router();
 module.exports = (db) => {
   
   router.use("/products", require("./products")(db));
-  router.use("/user", require("./user")(db));
   router.use("/auth", require("./auth")(db));
   router.use("/cards", require("./cards")(db));
   router.use("/users", require("./users")(db));
-  router.use("/orders", require("./products")(db));
+  router.use("/orders", require("./orders")(db));
+  
 
   return router;
 };
