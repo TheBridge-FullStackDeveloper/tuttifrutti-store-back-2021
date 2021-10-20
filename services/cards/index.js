@@ -1,19 +1,19 @@
-const router = require("express").Router();
-const { authorization } = require("../../middlewares/authorizer");
-const createCardValidation = require("../../middlewares/createCardValidator");
+const router = require('express').Router();
+const { authorization } = require('../../middlewares/authorizer');
+const createCardValidation = require('../../middlewares/createCardValidator');
 
 module.exports = (db) => {
   router.post(
-    "/new",
-    authorization,
+    '/new',
+    authorization(db),
     createCardValidation,
-    require("./create-card")(db)
+    require('./create-card')(db)
   );
   router.put(
-    "/update",
-    authorization,
+    '/update',
+    authorization(db),
     createCardValidation,
-    require("./update-card")(db)
+    require('./update-card')(db)
   );
 
   return router;

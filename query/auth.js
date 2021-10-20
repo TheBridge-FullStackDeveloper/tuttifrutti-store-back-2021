@@ -91,7 +91,6 @@ const getUserByToken = async (db, token) => {
     const result = await db.maybeOne(
       sql`SELECT username FROM users WHERE access_token=${token}`
     );
-    console.log('resultado', result);
     return result;
   } catch (error) {
     console.info('error at keepAccessToken query:', error.message);
