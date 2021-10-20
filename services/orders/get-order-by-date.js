@@ -12,7 +12,7 @@ module.exports = (db) => async (req, res) => {
       success: true,
       data: {
         coincidences: result.rowCount,
-        featured: result.rows,
+        products: result.rows,
       },
     });
   };
