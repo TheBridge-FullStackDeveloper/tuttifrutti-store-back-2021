@@ -4,7 +4,7 @@ module.exports = (db) => async (req, res) => {
   
     const filterDate = req.query.date
     
-    const username = res.locals.user
+    const { username } = res.locals.user
     const result = await getOrderByDate(db, { username , filterDate })
     
   
