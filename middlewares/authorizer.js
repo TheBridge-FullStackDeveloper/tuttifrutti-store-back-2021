@@ -1,5 +1,5 @@
 const { deserialize } = require('../helpers');
-const { getUserByToken } = require('../query/auth');
+const { tokenExists } = require('../query/auth');
 
 const authorization = (db) => async (req, res, next) => {
   const { authorization } = req.headers;
@@ -22,9 +22,16 @@ const authorization = (db) => async (req, res, next) => {
 
   const user = deserialize(token);
 
-  const tokenOwner = await getUserByToken(db, token);
+  if (!user) {
+    return next({
+      statusCode: 401,
+      error: new Error('unauthorized'),
+    });
+  }
+  console.log('hola');
+  const tokenExist = await tokenExists(db, token);
 
-  if (!tokenOwner) {
+  if (!tokenExist) {
     return next({
       statusCode: 401,
       error: new Error('unauthorized'),

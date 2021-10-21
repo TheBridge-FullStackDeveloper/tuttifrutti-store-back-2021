@@ -86,12 +86,13 @@ const keepAccessToken = async (db, token, id) => {
   }
 };
 
-const getUserByToken = async (db, token) => {
+const tokenExists = async (db, token) => {
   try {
     const result = await db.maybeOne(
-      sql`SELECT username FROM users WHERE access_token=${token}`
+      sql`SELECT COUNT(*) FROM users WHERE access_token=${token}`
     );
-    return result;
+    console.log(result);
+    return result.count > 0;
   } catch (error) {
     console.info('error at keepAccessToken query:', error.message);
     return false;
@@ -103,5 +104,5 @@ module.exports = {
   confirmUser,
   getUserByEmailOrUsername,
   keepAccessToken,
-  getUserByToken,
+  tokenExists,
 };
