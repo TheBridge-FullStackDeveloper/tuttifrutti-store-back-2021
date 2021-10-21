@@ -1,10 +1,10 @@
-const { authorization } = require("../../middlewares/authorizer");
+const { authorization } = require('../../middlewares/authorizer');
 
-const router = require("express").Router();
+const router = require('express').Router();
 
 module.exports = (db) => {
-	router.get("/", authorization, require("./getUser")(db));
-	router.put("/update", authorization, require("./updateUser")(db));
+  router.get('/', authorization(db), require('./getUser')(db));
+  router.put('/update', authorization(db), require('./updateUser')(db));
 
-	return router;
+  return router;
 };

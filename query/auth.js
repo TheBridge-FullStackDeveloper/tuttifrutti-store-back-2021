@@ -54,7 +54,7 @@ const getUserByEmailOrUsername = async (
 ) => {
   try {
     const result = await db.one(
-      sql`SELECT email, username, hash FROM users WHERE email LIKE ${mail} OR username LIKE ${username}`
+      sql`SELECT email, username, hash, id FROM users WHERE email LIKE ${mail} OR username LIKE ${username}`
     );
 
     if (!result) {
@@ -70,6 +70,18 @@ const getUserByEmailOrUsername = async (
     return result;
   } catch (error) {
     console.info('error at getUserByEmail query:', error.message);
+    return false;
+  }
+};
+
+const keepAccessToken = async (db, token, id) => {
+  try {
+    const result = await db.query(
+      sql`UPDATE users SET access_token=${token} WHERE id=${id}`
+    );
+    return result;
+  } catch (error) {
+    console.info('error at keepAccessToken query:', error.message);
     return false;
   }
 };
@@ -90,6 +102,19 @@ const updateToken = async (
   }
 };
 
+const tokenExists = async (db, token) => {
+  try {
+    const result = await db.maybeOne(
+      sql`SELECT COUNT(*) FROM users WHERE access_token=${token}`
+    );
+    console.log(result);
+    return result.count > 0;
+  } catch (error) {
+    console.info('error at keepAccessToken query:', error.message);
+    return false;
+  }
+};
+
 const getByToken = async (db, token) => {
   try {
     const { email, username } = await db.one(
@@ -106,6 +131,8 @@ module.exports = {
   createUser,
   confirmUser,
   getUserByEmailOrUsername,
+  keepAccessToken,
+  tokenExists,
   updateToken,
   getByToken,
 };
