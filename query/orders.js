@@ -15,6 +15,29 @@ const getOrders = async (db, { username, state }) => {
   }
 }
 
+const getOrderByDate = async (db, { username, filterDate }) => {
+  try {
+    const result = await db.query(sql`
+    SELECT u.id, u.username, p.name, o.order_date, o.state
+    FROM users u 
+      INNER JOIN orders o
+        ON u.id = o.user_id
+      INNER JOIN products_orders po
+        ON o.id = po.order_id
+      INNER JOIN products p
+        ON po.product_id = p.id
+    WHERE u.username = ${username} AND o.order_date >= ${filterDate}
+    ORDER BY o.order_date
+    `)
+    return result
+  } catch (e) {
+    console.info('Error at "getOrderByDate" query: ', e.message)
+    return false
+  }
+}
+
+
 module.exports = {
   getOrders,
+  getOrderByDate
 }
