@@ -24,6 +24,6 @@ app.use(require('./middlewares/error'));
 /*app.listen(3000, () => {
   console.log('> ✅ server up at port', process.env.SERVER_PORT)
 })*/
-app.listen(process.env.SERVER_PORT, () => {
-  console.log('> ✅ server up at port', process.env.SERVER_PORT);
+app.listen(process.env.PORT || 3000, () => {
+  console.log('> ✅ server up at port', process.env.PORT);
 });
