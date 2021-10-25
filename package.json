@@ -39,7 +39,9 @@
     "db:drop": "node scripts/drops.js",
     "db:seeds": "node scripts/seeds.js",
     "db:reset": "npm run db:drop && npm run db:create && npm run db:seeds",
-    "db:prod:create": "NODE_ENV=production node scripts/creation.js"
+    "db:prod:create": "NODE_ENV=production node scripts/creation.js",
+    "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=; NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install --only=dev --dev",
+    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;"
   },
   "repository": {
     "type": "git",
