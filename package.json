@@ -28,14 +28,15 @@
   },
   "scripts": {
     "dev": "nodemon app.js",
-    "start": "node app.js",
+    "start": "NODE_ENV=production node app.js",
     "docker:up": "docker-compose up",
     "docker:start": "docker-compose start",
     "docker:down": "docker-compose down",
     "db:create": "node scripts/creation.js",
     "db:drop": "node scripts/drops.js",
     "db:seeds": "node scripts/seeds.js",
-    "db:reset": "npm run db:drop && npm run db:create && npm run db:seeds"
+    "db:reset": "npm run db:drop && npm run db:create && npm run db:seeds",
+    "db:prod:create": "NODE_ENV=production node scripts/creation.js"
   },
   "repository": {
     "type": "git",
